@@ -17,7 +17,7 @@ function Login() {
         setLoading(true);
 
         try {
-            const response = await axios.post('http://localhost:3000/user/login', formData);
+            const response = await axios.post('https://checkmarksbackend.onrender.com/user/login', formData);
             if (response.data.token) {
                 localStorage.setItem('Authinfo', response.data.token);
                 navigate('/');
