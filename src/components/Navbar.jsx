@@ -1,132 +1,147 @@
 import { Menu, X } from "lucide-react";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.svg";
-import { NavLink } from "react-router-dom";
-import api from "../Api/api";
+import { useAuth } from "../context/AuthContext";
 
 const Navbar = () => {
-  const [userdata, setUserdata] = useState(null); // ✅ Use state instead of a variable
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      const token = localStorage.getItem("Authinfo"); // ✅ Get token from localStorage
-      if (token) {
-        try {
-          const user = await api.userinfo(); // ✅ Fetch user info properly
-          setUserdata(user);
-        } catch (error) {
-          console.error("Error fetching user info:", error);
-        }
-      }
-    };
-    fetchUserData();
-  }, []);
-
-  const navItems = [
-    { label: "Check Competition", to: "/#competition0" },
-    { label: "Contact Us", to: "/contact-Us" },
-    { label: "About Us", to: "/about-Us" },
-    { label: "Mentorship", to: "/mentorship" },
-    { label: "Privacy Policy", to: "/privacy-Policy" },
-    { label: "Refund Policy", to: "/refundPolicy" },
-  ];
-
-  const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
-  const toggleNavbar = () => setMobileDrawerOpen(!mobileDrawerOpen);
+  const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
+  const { userData, logout } = useAuth();
 
   const handleLogout = () => {
-    localStorage.removeItem("Authinfo"); // ✅ Clear token on logout
-    setUserdata(null); // ✅ Reset state
+    logout();
+    navigate('/');
+    setIsOpen(false);
   };
 
-  return (
-    <nav className="sticky top-0 z-50 bg-gray-900 text-white py-3 border-b border-neutral-700/80">
-      <div className="container mx-auto px-6 flex justify-between items-center">
-        {/* Logo Section */}
-        <div className="flex items-center">
-         <NavLink to="/"> <img className="h-10 w-10 mr-2" src={logo} alt="Checkmarks" /></NavLink>
-          <span className="text-xl font-semibold bg-gradient-to-r from-violet-700 via-pink-300 to-indigo-400 text-transparent bg-clip-text">
-            Checkmarks
-          </span>
-        </div>
+  const navItems = [
+    { label: "Home", to: "/" },
+    { label: "Check Competition", to: "/#competition0" },
+    { label: "Mentorship", to: "/mentorship" },
+    { label: "Contact Us", to: "/contact-Us" },
+    { label: "About Us", to: "/about-Us" },
+  ];
 
-        {/* Desktop Menu */}
-        <ul className="hidden lg:flex space-x-8">
-          {navItems.map((item, index) => (
-            <li key={index} className="hover:text-gray-300 transition">
-              <NavLink to={item.to} className="text-white">
+  return (
+    <nav className="sticky top-0 z-50 bg-gray-900 text-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          {/* Logo */}
+          <div className="flex-shrink-0">
+            <NavLink to="/" className="flex items-center">
+              <img className="h-8 w-8" src={logo} alt="Logo" />
+              <span className="ml-2 text-xl font-bold bg-gradient-to-r from-violet-400 to-pink-500 text-transparent bg-clip-text">
+                Checkmarks
+              </span>
+            </NavLink>
+          </div>
+
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-4">
+            {navItems.map((item) => (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                className={({ isActive }) =>
+                  `px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                    isActive 
+                      ? "text-white bg-gray-700" 
+                      : "text-gray-300 hover:text-white hover:bg-gray-700"
+                  }`
+                }
+              >
                 {item.label}
               </NavLink>
-            </li>
-          ))}
-        </ul>
+            ))}
 
-        {/* ✅ Show Username if Logged In */}
-        {userdata && <h1 className="mr-4">{userdata.name}</h1>}
+            {/* Auth Buttons */}
+            {userData ? (
+              <div className="flex items-center space-x-4">
+                <span className="text-sm font-medium text-gray-300">
+                  {userData.name || userData.email}
+                </span>
+                <button
+                  onClick={handleLogout}
+                  className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
+                >
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <div className="flex items-center space-x-2">
+                <NavLink
+                  to="/login"
+                  className="bg-transparent hover:bg-gray-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
+                >
+                  Login
+                </NavLink>
+                <NavLink
+                  to="/signup"
+                  className="bg-violet-500 hover:bg-violet-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
+                >
+                  Sign Up
+                </NavLink>
+              </div>
+            )}
+          </div>
 
-        {/* Sign In / Logout Button (Desktop) */}
-        <div className="hidden lg:flex">
-          {userdata ? (
+          {/* Mobile menu button */}
+          <div className="md:hidden">
             <button
-              onClick={handleLogout}
-              className="py-2 px-5 border border-white rounded-lg hover:bg-gray-800 transition"
+              onClick={() => setIsOpen(!isOpen)}
+              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
             >
-              Logout
+              {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
-          ) : (
-            <a
-              href="https:www.rohitdhiman.tech"
-              className="py-2 px-5 border border-white rounded-lg hover:bg-gray-800 transition"
-            >
-              Developers
-            </a>
-            
-          )}
-        </div>
-
-        {/* Mobile Menu Button */}
-        <div className="lg:hidden">
-          <button onClick={toggleNavbar}>
-            {mobileDrawerOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          </div>
         </div>
       </div>
 
-      {/* Mobile Drawer */}
-      {mobileDrawerOpen && (
-        <div className="fixed top-0 right-0 z-50 bg-gray-800 text-white w-1/2 h- p-6 flex flex-col items-center space-y-6 lg:hidden shadow-lg rounded-2xl">
-          <button onClick={toggleNavbar} className="absolute top-4 right-4">
-            <X size={24} />
-          </button>
-
-          <ul className="space-y-4">
-            {navItems.map((item, index) => (
-              <li key={index} className="hover:text-gray-300 transition">
-                <NavLink to={item.to} onClick={toggleNavbar}>
-                  {item.label}
-                </NavLink>
-              </li>
-            ))}
-          </ul>
-
-          {userdata ? (
-            <button
-              onClick={() => {
-                handleLogout();
-                toggleNavbar();
-              }}
-              className="py-2 px-5 border border-white rounded-lg hover:bg-gray-800 transition"
+      {/* Mobile Navigation */}
+      {isOpen && (
+        <div className="md:hidden bg-gray-800 text-white px-4 py-6 space-y-4">
+          {navItems.map((item) => (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              onClick={() => setIsOpen(false)}
+              className="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-700 transition-colors"
             >
-              Logout
-            </button>
+              {item.label}
+            </NavLink>
+          ))}
+
+          {/* Auth Buttons */}
+          {userData ? (
+            <div className="space-y-4">
+              <span className="block text-sm font-medium text-gray-300">
+                {userData.name || userData.email}
+              </span>
+              <button
+                onClick={handleLogout}
+                className="w-full bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
+              >
+                Logout
+              </button>
+            </div>
           ) : (
-            <a
-              href="https:www.rohitdhiman.tech"
-              onClick={toggleNavbar}
-              className="py-2 px-5 border border-white rounded-lg hover:bg-gray-800 transition"
-            >
-              Developers
-            </a>
+            <div className="space-y-2">
+              <NavLink
+                to="/login"
+                onClick={() => setIsOpen(false)}
+                className="block w-full bg-transparent hover:bg-gray-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
+              >
+                Login
+              </NavLink>
+              <NavLink
+                to="/signup"
+                onClick={() => setIsOpen(false)}
+                className="block w-full bg-violet-500 hover:bg-violet-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
+              >
+                Sign Up
+              </NavLink>
+            </div>
           )}
         </div>
       )}

@@ -44,13 +44,12 @@ function Mentorship() {
   const paymentButtonId = import.meta.env.VITE_APP_RAZORPAY_KEY;
   const scriptContainerRef = useRef(null);
   const navigate = useNavigate();
+  const userData = localStorage.getItem('Authinfo');
 
   useEffect(() => {
-    // Clean up any existing script
-    if (scriptContainerRef.current) {
-      scriptContainerRef.current.innerHTML = '';
-    }
+    if (!scriptContainerRef.current || !userData) return;
 
+    scriptContainerRef.current.innerHTML = '';
     const script = document.createElement("script");
     script.src = "https://checkout.razorpay.com/v1/payment-button.js";
     script.setAttribute("data-payment_button_id", paymentButtonId);
@@ -64,13 +63,16 @@ function Mentorship() {
       scriptContainerRef.current.appendChild(script);
     }
 
-    // Cleanup on unmount
     return () => {
       if (scriptContainerRef.current) {
         scriptContainerRef.current.innerHTML = '';
       }
     };
-  }, [paymentButtonId]);
+  }, [paymentButtonId, userData]);
+
+  const handleLoginRedirect = () => {
+    navigate('/login');
+  };
 
   return (
     <div className="min-h-screen bg-white text-gray-800 p-6 flex flex-col items-center justify-center">
@@ -89,7 +91,23 @@ function Mentorship() {
             </li>
           ))}
         </ul>
-        <form ref={scriptContainerRef} className="mt-6 text-center" />
+        <div className="mt-6 text-center">
+          {userData ? (
+            <form ref={scriptContainerRef} className="mb-4" />
+          ) : (
+            <>
+              <button
+                onClick={handleLoginRedirect}
+                className="bg-gradient-to-r from-violet-500 via-pink-500 to-blue-500 text-white px-8 py-3 rounded-lg font-semibold hover:opacity-90 transition duration-200 transform hover:scale-[1.02]"
+              >
+                Login to Purchase Mentorship
+              </button>
+              <p className="text-red-500 mt-4">
+                Please login to proceed with payment
+              </p>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
