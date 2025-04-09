@@ -55,7 +55,7 @@ const FileUpload = () => {
     try {
       setLoading(true);
       setMessage("");
-      const response = await axios.post("http://localhost:3000/upload", formData, {
+      const response = await axios.post("https://checkmarksbackend.onrender.com/upload", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       setMessage("File uploaded successfully!");
