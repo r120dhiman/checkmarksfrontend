@@ -21,7 +21,7 @@ const App = () => {
   return (
     <AuthProvider>
       <BrowserRouter>
-        <Navbar />
+        <Navbar /> 
         <Analytics />
         <Routes>
           <Route path='/' element={<><LandingPage/> </>} />
