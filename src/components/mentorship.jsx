@@ -129,7 +129,7 @@ const Mentorship = () => {
           </div>
 
           {/* Blinking Button */}
-          <Link to="/checkout">
+          <Link to="/mentorship">
             <div className="inline-block animate-pulse">
               <button className="px-5 py-2 bg-gradient-to-r from-pink-500 via-violet-500 to-blue-500 text-yellow-300 rounded-md hover:brightness-110 transition shadow-lg ring-2 ring-violet-300">
                 Register Now 

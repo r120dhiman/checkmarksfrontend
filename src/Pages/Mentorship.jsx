@@ -1,6 +1,8 @@
 import React from "react";
 import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router";
+import { motion } from "framer-motion";
+import { BookOpen, Clock, Target, Brain, MessageCircle, Star, Trophy } from "lucide-react";
 
 const mentorshipContent = [
   {
@@ -40,6 +42,16 @@ const mentorshipContent = [
   },
 ];
 
+const iconMap = {
+  "Crack JEE Advanced": <Trophy className="w-6 h-6" />,
+  "Smart Study Strategy": <BookOpen className="w-6 h-6" />,
+  "Time & Stress Management": <Clock className="w-6 h-6" />,
+  "Paper Attempting Strategy": <Target className="w-6 h-6" />,
+  "Consistent Feedback": <Star className="w-6 h-6" />,
+  "Personalized Doubt Solving": <MessageCircle className="w-6 h-6" />,
+  "Make It Count": <Brain className="w-6 h-6" />
+};
+
 function Mentorship() {
   const paymentButtonId = import.meta.env.VITE_APP_RAZORPAY_KEY;
   const scriptContainerRef = useRef(null);
@@ -75,40 +87,88 @@ function Mentorship() {
   };
 
   return (
-    <div className="min-h-screen bg-white text-gray-800 p-6 flex flex-col items-center justify-center">
-      <div className="bg-white/60 backdrop-blur-sm rounded-xl shadow-md p-6 w-full max-w-3xl">
-        <h1 className="text-2xl font-bold text-center text-blue-600 mb-6">
-          One-on-One JEE Mentorship – ₹499 Only
-        </h1>
-        <p className="text-center text-gray-700 mb-8">
-          Trusted by aspirants. Learn directly from IITians. Simple, personal, and effective guidance to crack JEE Advanced.
-        </p>
-        <ul className="space-y-5">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 py-16 px-4">
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="max-w-4xl mx-auto"
+      >
+        {/* Hero Section */}
+        <div className="text-center mb-16">
+          <motion.h1 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 via-violet-600 to-pink-600 text-transparent bg-clip-text mb-6"
+          >
+            One-on-One JEE Mentorship
+          </motion.h1>
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            className="text-3xl font-bold text-gray-900 mb-4"
+          >
+            ₹449 Only
+          </motion.div>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            Trusted by aspirants. Learn directly from IITians. Simple, personal, and effective guidance to crack JEE Advanced.
+          </p>
+        </div>
+
+        {/* Features Grid */}
+        <div className="grid md:grid-cols-2 gap-6 mb-12">
           {mentorshipContent.map((item, index) => (
-            <li key={index} className="bg-white p-4 rounded-lg shadow">
-              <h2 className="text-lg font-semibold text-blue-700">{item.title}</h2>
-              <p className="text-gray-700 mt-1">{item.description}</p>
-            </li>
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: index * 0.1 }}
+              className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow p-6 border border-gray-100"
+            >
+              <div className="flex items-start space-x-4">
+                <div className="p-3 bg-violet-100 rounded-lg">
+                  {iconMap[item.title.split(" ")[0]] || <Star className="w-6 h-6 text-violet-600" />}
+                </div>
+                <div>
+                  <h2 className="text-xl font-semibold text-gray-900 mb-2">
+                    {item.title}
+                  </h2>
+                  <p className="text-gray-600 leading-relaxed">
+                    {item.description}
+                  </p>
+                </div>
+              </div>
+            </motion.div>
           ))}
-        </ul>
-        <div className="mt-6 text-center">
+        </div>
+
+        {/* CTA Section */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 }}
+          className="bg-gradient-to-r from-violet-500 via-purple-500 to-pink-500 rounded-2xl p-8 text-center shadow-xl"
+        >
           {userData ? (
             <form ref={scriptContainerRef} className="mb-4" />
           ) : (
-            <>
+            <div className="space-y-6">
+              <h3 className="text-2xl font-bold text-white mb-4">
+                Ready to Transform Your JEE Preparation?
+              </h3>
               <button
                 onClick={handleLoginRedirect}
-                className="bg-gradient-to-r from-violet-500 via-pink-500 to-blue-500 text-white px-8 py-3 rounded-lg font-semibold hover:opacity-90 transition duration-200 transform hover:scale-[1.02]"
+                className="bg-white text-purple-600 px-8 py-4 rounded-lg font-semibold hover:bg-gray-50 transition duration-200 transform hover:scale-[1.02] shadow-lg"
               >
                 Login to Purchase Mentorship
               </button>
-              <p className="text-red-500 mt-4">
+              <p className="text-pink-200 mt-4">
                 Please login to proceed with payment
               </p>
-            </>
+            </div>
           )}
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </div>
   );
 }
