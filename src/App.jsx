@@ -1,6 +1,6 @@
 'use client'
 import React from 'react'
-
+import { Analytics } from "@vercel/analytics/react"
 import Navbar from './components/Navbar'
 import {BrowserRouter,Routes,Route} from 'react-router-dom'
 import LandingPage from './Pages/LandingPage'
@@ -22,6 +22,7 @@ const App = () => {
     <AuthProvider>
       <BrowserRouter>
         <Navbar />
+        <Analytics />
         <Routes>
           <Route path='/' element={<><LandingPage/> </>} />
           <Route path='/mentorship' element={<Mentorship/>} />
