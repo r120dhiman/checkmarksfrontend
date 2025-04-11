@@ -8,13 +8,13 @@ const AnswerKeyNotice = () => {
         <div>
           <p className="font-semibold">We’re trying to fetch the JEE Main 2025 Session 2 answer key...</p>
           <p className="text-sm mt-1">
-            If you already have access to the official answer key PDF, please share it with us at{" "}
+            If you already have access to the official answer key, please share screen recording, Copy and paste or in any other way with us at{" "}
             <a
               href="mailto:checkmarks.tech@gmail.com"
               className="text-blue-700 underline hover:text-blue-900 inline-flex items-center space-x-1"
             >
               <MailIcon className="inline w-4 h-4" />
-              <span>checkmarks.tech@gmail.com</span>
+              <span>checkmarks.tech@gmail.com or Whatsapp us at +91 9350126101</span> 
             </a>
           </p>
         </div>
