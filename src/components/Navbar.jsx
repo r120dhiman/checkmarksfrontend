@@ -1,13 +1,13 @@
-import { Menu, X } from "lucide-react";
 import React, { useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
-import logo from "../assets/logo.svg";
+import { NavLink, useNavigate } from "react-router";
 import { useAuth } from "../context/AuthContext";
+import logo from "../assets/logo.svg";
+import { Menu, X } from "lucide-react";
 
 const Navbar = () => {
-  const navigate = useNavigate();
+  const { userData, logout } = useAuth(); // Access userData and logout from AuthContext
   const [isOpen, setIsOpen] = useState(false);
-  const { userData, logout } = useAuth();
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     logout();

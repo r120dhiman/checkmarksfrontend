@@ -15,16 +15,16 @@ export const AuthProvider = ({ children }) => {
 
   const login = (token) => {
     localStorage.setItem('Authinfo', token);
-    checkAuth();
+    checkAuth(); // Update userData after login
   };
 
   const logout = () => {
     localStorage.removeItem('Authinfo');
-    setUserData(null);
+    setUserData(null); // Clear userData on logout
   };
 
   useEffect(() => {
-    checkAuth();
+    checkAuth(); // Check authentication on app load
   }, []);
 
   return (

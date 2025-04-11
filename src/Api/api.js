@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URI='https://checkmarksbackend.onrender.com';
+const API_URI='http://localhost:3000';
 let result;
 const signupfunction=async(data) => {
   const {email, name, password}=data

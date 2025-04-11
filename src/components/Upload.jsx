@@ -3,13 +3,14 @@ import axios from "axios";
 import {useNavigate} from "react-router";
 
 const FileUpload = () => {
+  const API_URL=import.meta.env.VITE_APP_BACKEND_URL;
   const [file, setFile] = useState(null);
   const [userId] = useState("67bf4fbccd7796becb5e7c95");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+  // const [phone, setPhone] = useState("");
   const [city, setCity] = useState("");
   const [jeeDate, setJeeDate] = useState("");
   const [jeeShift, setJeeShift] = useState("Shift 1 (9:00 AM - 12:00 PM)");
@@ -28,10 +29,10 @@ const FileUpload = () => {
 
   const handleUpload = async () => {
     if (!file) return setMessage("Please select a file.");
-    if (!name || !email || !phone || !city || !jeeDate)
+    if (!name || !email  || !city || !jeeDate)
       return setMessage("All fields are required.");
-    if (!/^[6-9]\d{9}$/.test(phone))
-      return setMessage("Please enter a valid 10-digit Indian phone number.");
+    // if (!/^[6-9]\d{9}$/.test(phone))
+    //   return setMessage("Please enter a valid 10-digit Indian phone number.");
     if (!/^[\w.-]+@[\w.-]+\.\w+$/.test(email))
       return setMessage("Please enter a valid email address.");
     if (!agree) return setMessage("You must agree to the terms and conditions.");
@@ -44,7 +45,7 @@ const FileUpload = () => {
     const userData = {
       name,
       email,
-      phone,
+      // phone,
       city,
       jeeDate,
       jeeShift
@@ -55,7 +56,7 @@ const FileUpload = () => {
     try {
       setLoading(true);
       setMessage("");
-      const response = await axios.post("https://checkmarksbackend.onrender.com/upload", formData, {
+      const response = await axios.post(`${API_URL}/upload`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       setMessage("File uploaded successfully!");
@@ -137,7 +138,7 @@ const FileUpload = () => {
           </div>
 
           <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-            <input
+            {/* <input
               type="tel"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
@@ -146,7 +147,7 @@ const FileUpload = () => {
               pattern="[6-9]{1}[0-9]{9}"
               maxLength="10"
               title="Enter a valid 10-digit Indian phone number"
-            />
+            /> */}
             <input
               type="text"
               value={city}

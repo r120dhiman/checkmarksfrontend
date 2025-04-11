@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 function Signup() {
+    const API_URL=import.meta.env.VITE_APP_BACKEND_URL;
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         name: '',
@@ -43,7 +44,7 @@ function Signup() {
         }
 
         try {
-            const response = await axios.post('https://checkmarksbackend.onrender.com/user/signup', formData);
+            const response = await axios.post(`${API_URL}/user/signup`, formData);
             if (response.data) {
                 navigate('/login');
             }
