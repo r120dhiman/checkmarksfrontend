@@ -13,7 +13,7 @@ const FileUpload = () => {
   // const [phone, setPhone] = useState("");
   const [city, setCity] = useState("");
   const [jeeDate, setJeeDate] = useState("");
-  const [jeeShift, setJeeShift] = useState("Shift 1 (9:00 AM - 12:00 PM)");
+  const [jeeShift, setJeeShift] = useState("1");
   const [agree, setAgree] = useState(false);
   const [showAd, setShowAd] = useState(false); 
   const [responseData , setResponseData ] = useState();
