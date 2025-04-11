@@ -11,6 +11,7 @@ const AnswerKeyNotice = () => {
           <ul className="list-disc list-inside mt-2">
             <li>JEE Main 2025 Session 2 Date 3/04/2025 Shift 1</li>
             <li>JEE Main 2025 Session 2 Date 3/04/2025 Shift 2</li>
+            <li>JEE Main 2025 Session 2 Date 7/04/2025 Shift 1</li>
 </ul>
           <p className="text-sm mt-1">
             If you already have access to the official answer key, please share screen recording, Copy and paste or in any other way with us at{" "}
