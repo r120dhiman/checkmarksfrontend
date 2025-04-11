@@ -33,6 +33,7 @@ const App = () => {
           <Route path='/privacy-Policy' element={<PrivacyPolicyAndTnCPage/>} />
           <Route path='/refundPolicy' element={<CancellationAndRefundPage/>} />
           <Route path='/payment' element={<AfterPayment/>} />
+          <Route path='/payment' element={<AfterPayment/>} />
           <Route path='*' element={<Notfound/>} />
         </Routes>
         <Footer/>
