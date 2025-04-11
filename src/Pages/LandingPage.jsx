@@ -4,12 +4,14 @@ import Upload from '../components/Upload'
 import Mentorship from '../components/mentorship'
 import { useAuth } from '../context/AuthContext'
 import FutureProduct from '../components/Futureproduct'
+import AnswerKeyNotice from '../components/Answerkey'
 
 
 function LandingPage() {
   const { userData } = useAuth();
   return (
     <div className="min-h-screen bg-gray-50">
+      <AnswerKeyNotice/>
       <Hero/>
       <div className="container mx-auto px-4 py-8">
         {userData && userData.isEnrolled && (
