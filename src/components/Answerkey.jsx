@@ -9,6 +9,7 @@ const AnswerKeyNotice = () => {
           <p className="font-semibold">We’re trying to fetch the JEE Main 2025 Session 2 answer key...</p>
           Available answer keys:-
           <ul className="list-disc list-inside mt-2">
+            <li>JEE Main 2025 Session 2 Date 2/04/2025 Shift 1</li>
             <li>JEE Main 2025 Session 2 Date 3/04/2025 Shift 1</li>
             <li>JEE Main 2025 Session 2 Date 3/04/2025 Shift 2</li>
             <li>JEE Main 2025 Session 2 Date 4/04/2025 Shift 2</li>
