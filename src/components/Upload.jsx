@@ -64,7 +64,7 @@ const FileUpload = () => {
       
     } catch (error) {
       console.error("Upload error:", error);
-      setMessage( "We are trying to fetch Answerkey for your shift. Please help us by sharing your shift's answerkey at +91 9350126101 or mail us at checkmarks.tech@gmail.com.");
+      setMessage( "Please check data again.");
     } finally {
       setShowAd(false);
       setLoading(false);
