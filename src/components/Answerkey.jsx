@@ -13,6 +13,7 @@ const AnswerKeyNotice = () => {
             <li>JEE Main 2025 Session 2 Date 3/04/2025 Shift 2</li>
             <li>JEE Main 2025 Session 2 Date 4/04/2025 Shift 2</li>
             <li>JEE Main 2025 Session 2 Date 7/04/2025 Shift 1</li>
+            <li>JEE Main 2025 Session 2 Date 7/04/2025 Shift 2</li>
             <li>JEE Main 2025 Session 2 Date 8/04/2025 Shift 2</li>
 </ul>
           <p className="text-sm mt-1">
